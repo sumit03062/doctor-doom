@@ -1,0 +1,58 @@
+/* ============================================= */
+/*  CUSTOM.CSS – Doctor / Clinic Website 2025    */
+/*  Just link this file after Tailwind CDN       */
+/* ============================================= */
+
+/* 1. nav buttons */
+.bg-doctor-hero {
+  background: radial-gradient(89.35% 218.47% at 12.74% 84.68%,
+      #f0fcff 0%,
+      #5bc2d9 0.01%,
+      #0ba3c5 29.69%,
+      #037f9a 66.78%,
+      #0ba3c5 86.98%,
+      #00bae2 100%);
+}
+
+/* 2. Text Gradient (for big headings) */
+/* .text-gradient {
+  background: radial-gradient(122% 400% at -30.17% 120%,
+      #f0fcff 0%,
+      #def9ff 40.7%,
+      #aaefff 73.35%,
+      #99e7f8 83.9%,
+      #d1f7ff 96.79%);
+} */
+
+.--
+
+.text-gradient 
+{
+    color: (122% 400% at -30.17% 120%, #f0fcff 0%, #def9ff 40.7%, #aaefff 73.35%, #99e7f8 83.9%, #d1f7ff 96.79%);
+}
+
+
+
+/* Basic reset and body styling */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Optional: smooth scrolling for links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Link styles */
+a {
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Optional: remove list styles if using nav ul */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
