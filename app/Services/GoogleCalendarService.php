@@ -2,41 +2,50 @@
 
 namespace App\Services;
 
-use Google\Client;
-use Google\Service\Calendar;
-use Google\Service\Calendar\Event;
+use Google\Client as GoogleClient;
+use Google\Service\Calendar as GoogleCalendar;
+use Google\Service\Calendar\Event as GoogleEvent;
 
 class GoogleCalendarService
 {
-    protected function getClient()
+    protected function getClient(): GoogleClient
     {
-        $client = new Client();
+        $client = new GoogleClient();
+
         $client->setApplicationName('Appointment Booking');
-        $client->setScopes(Calendar::CALENDAR);
+        $client->setScopes(GoogleCalendar::CALENDAR);
         $client->setAuthConfig(storage_path('app/google/credentials.json'));
         $client->setAccessType('offline');
+        $client->setPrompt('select_account consent');
 
-        // Load saved token
         $tokenPath = storage_path('app/google/token.json');
+
         if (file_exists($tokenPath)) {
-            $client->setAccessToken(json_decode(file_get_contents($tokenPath), true));
+            $client->setAccessToken(
+                json_decode(file_get_contents($tokenPath), true)
+            );
         }
 
-        // Refresh token if expired
         if ($client->isAccessTokenExpired()) {
-            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-            file_put_contents($tokenPath, json_encode($client->getAccessToken()));
+            if ($client->getRefreshToken()) {
+                $client->fetchAccessTokenWithRefreshToken(
+                    $client->getRefreshToken()
+                );
+                file_put_contents(
+                    $tokenPath,
+                    json_encode($client->getAccessToken())
+                );
+            }
         }
 
         return $client;
     }
 
-    public function createEvent($data)
+    public function createEvent(array $data)
     {
-        $client = $this->getClient();
-        $service = new Calendar($client);
+        $service = new GoogleCalendar($this->getClient());
 
-        $event = new Event([
+        $event = new GoogleEvent([
             'summary' => 'Doctor Appointment - ' . $data['full_name'],
             'description' => $data['message'] ?? 'No additional notes',
             'start' => [

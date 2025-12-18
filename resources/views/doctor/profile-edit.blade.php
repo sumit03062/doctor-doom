@@ -23,13 +23,13 @@
             <!-- Full Name -->
             <div class="mb-5">
                 <x-input-label value="Full Name" />
-                <x-text-input name="name" value="{{ old('name', $doctor->name) }}" class="w-full mt-1" />
+                <x-text-input name="name" value="{{ old('name', Auth::user()->name) }}" class="w-full mt-1" />
             </div>
 
             <!-- Age -->
             <div class="mb-5">
                 <x-input-label value="Age" />
-                <x-text-input type="number" name="age" value="{{ old('age', $doctor->age) }}" class="w-full mt-1" />
+                <x-text-input type="number" name="age" value="{{ old('age', Auth::user()->age) }}" class="w-full mt-1" />
             </div>
 
             <!-- Gender -->
@@ -37,58 +37,58 @@
                 <x-input-label value="Gender" />
                 <select name="gender" class="w-full mt-1 border-gray-300 rounded-lg focus:ring-indigo-500">
                     <option value="">Select</option>
-                    <option value="male" @selected($doctor->gender=='male')>Male</option>
-                    <option value="female" @selected($doctor->gender=='female')>Female</option>
-                    <option value="other" @selected($doctor->gender=='other')>Other</option>
+                    <option value="male" @selected(Auth::user()->gender=='male')>Male</option>
+                    <option value="female" @selected(Auth::user()->gender=='female')>Female</option>
+                    <option value="other" @selected(Auth::user()->gender=='other')>Other</option>
                 </select>
             </div>
 
             <!-- Specialization -->
             <div class="mb-5">
                 <x-input-label value="Specialization" />
-                <x-text-input name="specialization" placeholder="Cardiologist, Dentist..." value="{{ old('specialization', $doctor->specialization) }}" class="w-full mt-1"/>
+                <x-text-input name="specialization" placeholder="Cardiologist, Dentist..." value="{{ old('specialization', optional($doctor)->specialization) }}" class="w-full mt-1"/>
             </div>
 
             <!-- Experience -->
             <div class="mb-5">
                 <x-input-label value="Experience (Years)" />
-                <x-text-input type="number" name="experience" value="{{ old('experience', $doctor->experience) }}" class="w-full mt-1"/>
+                <x-text-input type="number" name="experience" value="{{ old('experience',  optional($doctor)->experience) }}" class="w-full mt-1"/>
             </div>
 
             <!-- Qualification -->
             <div class="mb-5">
                 <x-input-label value="Qualification" />
-                <x-text-input name="qualification" placeholder="MBBS, MD..." value="{{ old('qualification', $doctor->qualification) }}"  class="w-full mt-1"/>
+                <x-text-input name="qualification" placeholder="MBBS, MD..." value="{{ old('qualification',  optional($doctor)->qualification) }}"  class="w-full mt-1"/>
             </div>
 
             <!-- About / Bio -->
             <div class="mb-5">
                 <x-input-label value="About / Bio" />
-                <textarea name="about" rows="4" class="w-full mt-1 border-gray-300 rounded-xl focus:ring-indigo-500" placeholder="Short bio about doctor">{{ old('about', $doctor->about) }}</textarea>
+                <textarea name="about" rows="4" class="w-full mt-1 border-gray-300 rounded-xl focus:ring-indigo-500" placeholder="Short bio about doctor">{{ old('bio',  optional($doctor)->bio) }}</textarea>
             </div>
 
             <!-- Medals / Achievements -->
             <div class="mb-5">
                 <x-input-label value="Medals / Achievements" />
-                <textarea name="medals" rows="2" class="w-full mt-1 border-gray-300 rounded-xl focus:ring-indigo-500" placeholder="Awards, Medals, Recognitions">{{ old('medals', $doctor->medals) }}</textarea>
+                <textarea name="medals" rows="2" class="w-full mt-1 border-gray-300 rounded-xl focus:ring-indigo-500" placeholder="Awards, Medals, Recognitions">{{ old('medals',  optional($doctor)->medals) }}</textarea>
             </div>
 
             <!-- Clinic Name -->
             <div class="mb-5">
                 <x-input-label value="Clinic / Hospital Name" />
-                <x-text-input name="clinic_name" value="{{ old('clinic_name', $doctor->clinic_name) }}" class="w-full mt-1" />
+                <x-text-input name="clinic_name" value="{{ old('clinic_name', optional($doctor)->clinic_name) }}" class="w-full mt-1" />
             </div>
 
             <!-- Clinic Address -->
             <div class="mb-5">
                 <x-input-label value="Clinic Address" />
-                <textarea name="clinic_address" rows="2" class="w-full mt-1 border-gray-300 rounded-xl focus:ring-indigo-500">{{ old('clinic_address', $doctor->clinic_address) }}</textarea>
+                <textarea name="clinic_address" rows="2" class="w-full mt-1 border-gray-300 rounded-xl focus:ring-indigo-500">{{ old('clinic_address',  optional($doctor)->clinic_address) }}</textarea>
             </div>
 
             <!-- Consultation Fees -->
             <div class="mb-5">
                 <x-input-label value="Consultation Fees" />
-                <x-text-input type="number" name="fees" value="{{ old('fees', $doctor->fees) }}" class="w-full mt-1" />
+                <x-text-input type="number" name="fees" value="{{ old('fees',  optional($doctor)->fees) }}" class="w-full mt-1" />
             </div>
 
             <!-- Save / Cancel -->

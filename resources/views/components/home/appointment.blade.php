@@ -114,8 +114,9 @@
                                     @foreach($doctors as $doctor)
                                     <option value="{{ $doctor->id }}">
                                         Dr. {{ $doctor->name }}
-                                        ({{ $doctor->doctor->specialization ?? 'General' }})
+                                        ({{ $doctor->doctorProfile->specialization ?? 'General' }})
                                     </option>
+
 
                                     @endforeach
                                 </select>

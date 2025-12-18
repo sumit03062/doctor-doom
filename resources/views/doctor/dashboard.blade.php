@@ -19,7 +19,7 @@
 
                 <div class="flex gap-3">
                     <a href="{{ route('doctor.profile-edit') }}"
-                       class="px-5 py-2 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700">
+                        class="px-5 py-2 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700">
                         Edit Profile
                     </a>
 
@@ -62,7 +62,7 @@
 
             <!-- PROFILE CARD -->
             @php
-                $doctor = Auth::user()->doctor;
+            $doctor = Auth::user()->doctorProfile;
             @endphp
 
             <div class="lg:col-span-1">
@@ -71,8 +71,8 @@
 
                     <div class="relative px-8 pb-10 -mt-20 text-center">
                         <img src="{{ Auth::user()->profile_photo_url }}"
-                             class="object-cover w-40 h-40 mx-auto border-8 border-white rounded-full shadow-2xl"
-                             alt="Doctor Photo">
+                            class="object-cover w-40 h-40 mx-auto border-8 border-white rounded-full shadow-2xl"
+                            alt="Doctor Photo">
 
                         <h3 class="mt-6 text-2xl font-bold text-gray-900">
                             Dr. {{ Auth::user()->name }}
@@ -102,36 +102,75 @@
                     </h3>
 
                     @if($appointments->count())
-                        <div class="space-y-4">
-                            @foreach($appointments as $appointment)
-                                <div class="flex flex-col gap-4 p-5 border rounded-2xl sm:flex-row sm:items-center sm:justify-between">
-                                    <div>
-                                        <p class="text-lg font-semibold text-gray-900">
-                                            {{ $appointment->patient->name }}
-                                        </p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="text-left bg-gray-100">
+                                    <th class="px-4 py-3 text-sm font-semibold text-gray-700">Patient</th>
+                                    <th class="px-4 py-3 text-sm font-semibold text-gray-700">Date & Time</th>
+                                    <th class="px-4 py-3 text-sm font-semibold text-gray-700">Reason</th>
+                                    <th class="px-4 py-3 text-sm font-semibold text-gray-700">Status</th>
+                                    <th class="px-4 py-3 text-sm font-semibold text-gray-700">Actions</th>
+                                </tr>
+                            </thead>
 
-                                        <p class="text-sm text-gray-500">
-                                            {{ $appointment->appointment_date }} • {{ $appointment->appointment_time }}
-                                        </p>
+                            <tbody class="divide-y">
+                                @foreach($appointments as $appointment)
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-4 font-medium text-gray-900">
+                                        {{ $appointment->patient->name }}
+                                    </td>
 
-                                        <p class="text-sm text-gray-500">
-                                            Reason: {{ $appointment->message ?? 'General Consultation' }}
-                                        </p>
-                                    </div>
+                                    <td class="px-4 py-4 text-sm text-gray-600">
+                                        {{ $appointment->appointment_date }} <br>
+                                        <span class="text-xs text-gray-500">{{ $appointment->appointment_time }}</span>
+                                    </td>
 
-                                    <span class="px-4 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded-full">
-                                        {{ ucfirst($appointment->status ?? 'booked') }}
-                                    </span>
-                                </div>
-                            @endforeach
-                        </div>
+                                    <td class="px-4 py-4 text-sm text-gray-600">
+                                        {{ $appointment->message ?? 'General Consultation' }}
+                                    </td>
+
+                                    <td class="px-4 py-4">
+                                        <span class="px-3 py-1 text-xs font-semibold rounded-full
+                                {{ $appointment->status === 'upcoming' ? 'text-blue-700 bg-blue-100' : 'text-green-700 bg-green-100' }}">
+                                            {{ ucfirst($appointment->status ?? 'booked') }}
+                                        </span>
+                                    </td>
+
+                                    <td class="px-4 py-4 space-x-3 text-sm">
+                                        @if($appointment->status === 'upcoming')
+                                        <a href="{{ route('appointment.edit', $appointment) }}"
+                                            class="font-medium text-blue-600 hover:underline">
+                                            Edit
+                                        </a>
+
+                                        <form action="{{ route('appointment.destroy', $appointment) }}"
+                                            method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button class="font-medium text-red-600 hover:underline"
+                                                onclick="return confirm('Cancel appointment?')">
+                                                Cancel
+                                            </button>
+                                        </form>
+                                        @else
+                                        <span class="text-gray-400">—</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     @else
-                        <div class="py-12 text-center text-gray-500">
-                            No appointments yet. Patients will appear here once booked.
-                        </div>
+                    <div class="py-12 text-center text-gray-500">
+                        No appointments yet. Patients will appear here once booked.
+                    </div>
                     @endif
                 </div>
             </div>
+
 
         </div>
 

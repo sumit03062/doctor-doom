@@ -64,9 +64,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Appointments
-    Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointment.create');
-    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointment.store');
-    Route::delete('/appointment/{appointment}', [AppointmentController::class, 'destroy'])->name('appointment.destroy');
+    Route::get('/appointment/create', [AppointmentController::class, 'create'])
+        ->name('appointment.create');
+
+    Route::post('/appointment', [AppointmentController::class, 'store'])
+        ->name('appointment.store');
+
+    Route::get('/appointments/{appointment}/edit', [AppointmentController::class, 'edit'])
+        ->name('appointment.edit');
+
+    Route::put('/appointment/{appointment}', [AppointmentController::class, 'update'])
+        ->name('appointment.update');
+
+    Route::delete('/appointment/{appointment}', [AppointmentController::class, 'destroy'])
+        ->name('appointment.destroy');
+
+    Route::get('/appointments/confirmation/{appointment}', function (Appointment $appointment) {
+        return view('appointments.confirmation', compact('appointment'));
+    })->name('appointment.confirmation');
 });
 
 /*
@@ -100,3 +115,7 @@ Route::get('/google/callback', [GoogleController::class, 'callback'])->name('goo
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+
+Route::post('/doctor/profile-edit', [ProfileController::class, 'updateDoctor'])
+    ->name('doctor.profile-edit');

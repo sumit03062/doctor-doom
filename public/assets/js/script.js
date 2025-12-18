@@ -6,6 +6,10 @@ gsap.from("#navbar", {
     ease: "power3.out",
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    lucide.createIcons();
+});
+
 // Mobile menu toggle
 const mobileBtn = document.querySelector("#mobileBtn");
 console.log("We are here");
@@ -54,10 +58,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update on slide change
     swiper.on("slideChange", syncText);
 });
-
-
-
-
-
-
 

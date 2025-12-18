@@ -58,6 +58,3 @@
     </div>
   </div>
 </footer>
-<script>
-  lucide.createIcons();
-</script>

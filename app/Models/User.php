@@ -142,8 +142,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * Doctor profile relation
      * ✅ This will allow Auth::user()->doctor
      */
-    public function doctor()
+    public function doctorProfile()
     {
         return $this->hasOne(Doctor::class);
     }
+
+    
+    
 }

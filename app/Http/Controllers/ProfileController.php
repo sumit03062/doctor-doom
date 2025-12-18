@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\update;
 use App\Models\Doctor;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
-    /**
-     * =========================
-     * Breeze User Profile
-     * =========================
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Breeze User Profile
+    |--------------------------------------------------------------------------
+    */
 
     public function edit(Request $request): View
     {
@@ -50,9 +50,6 @@ class ProfileController extends Controller
             ->with('status', 'profile-updated');
     }
 
-    /**
-     * Update profile photo
-     */
     public function updatePhoto(Request $request): RedirectResponse
     {
         $request->validate([
@@ -61,26 +58,20 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        if (
-            $user->profile_photo_path &&
-            Storage::disk('public')->exists($user->profile_photo_path)
-        ) {
+        if ($user->profile_photo_path) {
             Storage::disk('public')->delete($user->profile_photo_path);
         }
 
-        $file = $request->file('profile_photo');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->storeAs('profile-photos', $fileName, 'public');
+        $path = $request->file('profile_photo')
+            ->store('profile-photos', 'public');
 
-        $user->profile_photo_path = 'profile-photos/' . $fileName;
-        $user->save();
+        $user->update([
+            'profile_photo_path' => $path
+        ]);
 
         return back()->with('status', 'profile-photo-updated');
     }
 
-    /**
-     * Delete account
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -89,10 +80,7 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        if (
-            $user->profile_photo_path &&
-            Storage::disk('public')->exists($user->profile_photo_path)
-        ) {
+        if ($user->profile_photo_path) {
             Storage::disk('public')->delete($user->profile_photo_path);
         }
 
@@ -102,91 +90,86 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/')
-            ->with('status', 'account-deleted');
+        return Redirect::to('/')->with('status', 'account-deleted');
     }
 
-    /**
-     * =========================
-     * Doctor Profile
-     * =========================
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Doctor Profile (SEPARATE TABLE)
+    |--------------------------------------------------------------------------
+    */
 
     public function editDoctor(): View
     {
         return view('doctor.profile-edit', [
-            'doctor' => Auth::user(),
+            'user'   => Auth::user(),
+            'doctor' => Auth::user()->doctorProfile
         ]);
     }
 
-    public function updateDoctor(Request $request)
+    public function updateDoctor(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'phone'         => 'nullable|string|max:15',
-            'gender'        => 'nullable|in:male,female,other',
-            'specialization' => 'required|string|max:255',
-            'experience' => 'required|integer|min:0|max:60',
-            'qualification' => 'required|string|max:255',
-            'about' => 'nullable|string|max:1000',
-            'medals' => 'nullable|string|max:1000',
-            'clinic_name' => 'nullable|string|max:255',
-            'clinic_address' => 'nullable|string|max:500',
-            'fees' => 'nullable|integer',
-            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-        ]);
-
         $user = Auth::user();
 
-        $user->update([
-        'name' => $request->name,
-        'phone' => $request->phone,
-        'gender' => $request->gender,
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'age' => 'nullable|integer|min:18|max:100',
+            'gender' => 'nullable|in:male,female,other',
 
-        // Check if doctor record exists
-        $doctor = $user->doctor;
+            'specialization' => 'required|string|max:255',
+            'experience' => 'nullable|integer|min:0|max:60',
+            'qualification' => 'nullable|string|max:255',
+            'about' => 'nullable|string',
+            'medals' => 'nullable|string',
+            'clinic_name' => 'nullable|string|max:255',
+            'clinic_address' => 'nullable|string',
+            'fees' => 'nullable|numeric|min:0',
 
-        if (!$doctor) {
-            // Create new doctor record
-            $doctor = $user->doctor()->create([
-                'specialization' => $request->specialization,
-                'experience' => $request->experience,
-                'qualification' => $request->qualification,
-                'about' => $request->about,
-                'medals' => $request->medals,
-                'clinic_name' => $request->clinic_name,
-                'clinic_address' => $request->clinic_address,
-                'fees' => $request->fees,
-            ]);
-        } else {
-            // Update existing record
-            $doctor->update([
-                'specialization' => $request->specialization,
-                'experience' => $request->experience,
-                'qualification' => $request->qualification,
-                'about' => $request->about,
-                'medals' => $request->medals,
-                'clinic_name' => $request->clinic_name,
-                'clinic_address' => $request->clinic_address,
-                'fees' => $request->fees,
-            ]);
-        }
+            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-        // Handle profile photo
-        if ($request->hasFile('profile_photo')) {
-            if ($doctor->profile_photo_path && Storage::disk('public')->exists($doctor->profile_photo_path)) {
-                Storage::disk('public')->delete($doctor->profile_photo_path);
+        DB::transaction(function () use ($request, $user) {
+
+            /* -------------------------
+             | 1️⃣ USER TABLE
+             -------------------------*/
+            if ($request->hasFile('profile_photo')) {
+                if ($user->profile_photo_path) {
+                    Storage::disk('public')->delete($user->profile_photo_path);
+                }
+
+                $path = $request->file('profile_photo')
+                    ->store('profile-photos', 'public');
+
+                $user->profile_photo_path = $path;
             }
 
-            $file = $request->file('profile_photo');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('profile-photos', $fileName, 'public');
+            $user->update([
+                'name' => $request->name,
+                'age' => $request->age,
+                'gender' => $request->gender,
+            ]);
 
-            $doctor->profile_photo_path = 'profile-photos/' . $fileName;
-            $doctor->save();
-        }
+            /* -------------------------
+             | 2️⃣ DOCTOR TABLE
+             -------------------------*/
+            Doctor::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'name' => $user->name,
+                    'email' => $user->email, // ✅ ADD THIS
+                    'specialization' => $request->specialization,
+                    'experience' => $request->experience,
+                    'qualification' => $request->qualification,
+                    'bio' => $request->about,
+                    'medals' => $request->medals,
+                    'clinic_name' => $request->clinic_name,
+                    'clinic_address' => $request->clinic_address,
+                    'fees' => $request->fees,
+                ]
+            );
+        });
 
-        return redirect()->route('doctor.dashboard')->with('success', 'Profile updated successfully');
+        return back()->with('success', 'Doctor profile updated successfully.');
     }
 }

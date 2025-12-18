@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Appointment;
+use App\Models\User;
+
 
 class DashboardController extends Controller
 {
@@ -26,5 +28,9 @@ class DashboardController extends Controller
             ->get();
 
         return view('dashboard', compact('appointments'));
+
+        $doctors = User::where('role', 'doctor')->get();
+
+        return view('home', compact('doctors'));
     }
 }

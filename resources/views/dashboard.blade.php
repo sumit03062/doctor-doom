@@ -156,7 +156,7 @@
                                         <td class="px-4 py-3">{{ $appt->appointment_date->format('d M Y') }}</td>
                                         <td class="px-4 py-3">{{ \Carbon\Carbon::parse($appt->appointment_time)->format('h:i A') }}</td>
                                         <td class="px-4 py-3">{{ ucwords($appt->department) }}</td>
-                                        <td class="px-4 py-3">{{ $appt->doctor ?? 'Any Available' }}</td>
+                                        <td class="px-4 py-3">Dr. {{ $appt->doctor ? $appt->doctor->name : 'Any Available' }}</td>
                                         <td class="px-4 py-3">
                                             <span class="px-3 py-1 text-xs rounded-full bg-amber-100 text-amber-800">
                                                 Upcoming
@@ -168,7 +168,7 @@
                                             <a href="{{ route('appointment.edit', $appt) }}" class="text-blue-600 hover:underline">Edit</a>
 
                                             <!-- Cancel -->
-                                            <form action="{{ route('appointment.cancel', $appt) }}" method="POST">
+                                            <form action="{{ route('appointment.destroy', $appt) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button class="text-red-600 hover:underline" onclick="return confirm('Cancel appointment?')">Cancel</button>
@@ -206,8 +206,9 @@
                         <div class="flex items-start justify-between mb-4">
                             <div>
                                 <h4 class="text-xl font-semibold text-gray-900">
-                                    {{ $appt->doctor ? ucwords(str_replace('_', ' ', str_replace('dr_', 'Dr. ', $appt->doctor))) : 'Any Available Doctor' }}
+                                    {{ $appt->doctor ? 'Dr. ' . $appt->doctor->name : 'Any Available Doctor' }}
                                 </h4>
+
                                 <p class="text-gray-600">{{ ucwords(str_replace('_', ' ', $appt->department)) }}</p>
                             </div>
                             <span class="px-4 py-2 text-sm font-medium rounded-full bg-amber-100 text-amber-800">

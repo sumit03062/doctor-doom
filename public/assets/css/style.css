@@ -1,58 +1,109 @@
-/* ============================================= */
-/*  CUSTOM.CSS – Doctor / Clinic Website 2025    */
-/*  Just link this file after Tailwind CDN       */
-/* ============================================= */
+/* =========================
+   ROOT THEME COLORS
+========================= */
+:root {
+    /* Primary Brand Colors */
+    --green-primary: #22c55e;   /* Tailwind green-500 */
+    --green-dark: #16a34a;      /* green-600 */
 
-/* 1. nav buttons */
-.bg-doctor-hero {
-  background: radial-gradient(89.35% 218.47% at 12.74% 84.68%,
-      #f0fcff 0%,
-      #5bc2d9 0.01%,
-      #0ba3c5 29.69%,
-      #037f9a 66.78%,
-      #0ba3c5 86.98%,
-      #00bae2 100%);
-}
+    --blue-primary: #3b82f6;    /* blue-500 */
+    --blue-dark: #2563eb;       /* blue-600 */
 
-/* 2. Text Gradient (for big headings) */
-/* .text-gradient {
-  background: radial-gradient(122% 400% at -30.17% 120%,
-      #f0fcff 0%,
-      #def9ff 40.7%,
-      #aaefff 73.35%,
-      #99e7f8 83.9%,
-      #d1f7ff 96.79%);
-} */
+    /* Gradients */
+    --gradient-brand: linear-gradient(to right, var(--green-primary), var(--blue-primary));
+    --gradient-brand-dark: linear-gradient(to right, var(--green-dark), var(--blue-dark));
+    --gradient-brand-light: linear-gradient(to right, #ecfdf5, #eff6ff, #ffffff);
+    /* Text Colors */
+    --text-dark: #1f2937;       /* gray-800 */
+    --text-muted: #6b7280;      /* gray-500 */
 
-.--
-
-.text-gradient 
-{
-    color: (122% 400% at -30.17% 120%, #f0fcff 0%, #def9ff 40.7%, #aaefff 73.35%, #99e7f8 83.9%, #d1f7ff 96.79%);
+    /* Background */
+    --bg-white: #ffffff;
 }
 
 
 
-/* Basic reset and body styling */
-body {
-    margin: 0;
-    padding: 0;
+/* =========================
+   GLOBAL BRAND CLASSES
+========================= */
+
+/* Backgrounds */
+.bg-brand {
+    background: var(--gradient-brand);
 }
 
-/* Optional: smooth scrolling for links */
-html {
-    scroll-behavior: smooth;
+.bg-brand-dark {
+    background: var(--gradient-brand-dark);
 }
 
-/* Link styles */
-a {
-    text-decoration: none;
-    transition: all 0.3s ease;
+/* Text */
+.text-brand {
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* Optional: remove list styles if using nav ul */
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.text-muted {
+    color: var(--text-muted);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--blue-primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--blue-dark);
+}
+
+.btn-secondary {
+    background-color: var(--green-primary);
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: var(--green-dark);
+}
+
+
+
+/* =========================
+   FOOTER COLORS
+========================= */
+.footer-bg {
+    background: var(--gradient-brand-light, linear-gradient(to right, #ecfdf5, #eff6ff, #ffffff));
+}
+
+.footer-link {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--green-primary);
+}
+
+.footer-heading {
+    color: var(--text-dark);
+}
+
+.footer-btn {
+    background-color: var(--blue-primary);
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.footer-btn:hover {
+    background-color: var(--blue-dark);
+}
+
+.footer-social {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+.footer-social:hover {
+    color: var(--green-primary);
 }
