@@ -5,9 +5,9 @@
         <!-- Header -->
         <div class="mb-12 text-center">
             <h2 class="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
-                Book Your Appointment
+                Book Your  <span class="text-transparent bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text">Appointment</span>
             </h2>
-            <p class="max-w-2xl mx-auto text-lg text-gray-600 lg:text-xl">
+            <p class="max-w-2xl mx-auto text-lg text-gray-600 split-desc lg:text-xl">
                 Get expert care from our specialist doctors. Same-day appointments available.
             </p>
         </div>
@@ -165,7 +165,7 @@
                             <!-- Submit Button -->
                             <div class="pt-4">
                                 <button type="submit" id="appointmentSubmitBtn"
-                                    class="flex items-center justify-center w-full gap-3 py-5 text-xl font-bold text-white transition-all transform shadow-xl bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl hover:from-blue-700 hover:to-emerald-700 active:scale-95 hover:shadow-2xl hover:-translate-y-1 group">
+                                    class="flex items-center justify-center w-full gap-3 py-5 text-xl font-bold text-white transition-all transform shadow-xl tilt-btnn tilt-btn bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl hover:from-blue-700 hover:to-emerald-700 active:scale-95 hover:shadow-2xl hover:-translate-y-1 group">
                                     <span>Book Appointment Now</span>
                                     <svg class="w-6 h-6 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

@@ -3,25 +3,36 @@
 ========================= */
 :root {
     /* Primary Brand Colors */
-    --green-primary: #22c55e;   /* Tailwind green-500 */
-    --green-dark: #16a34a;      /* green-600 */
+    --green-primary: #22c55e; /* Tailwind green-500 */
+    --green-dark: #16a34a; /* green-600 */
 
-    --blue-primary: #3b82f6;    /* blue-500 */
-    --blue-dark: #2563eb;       /* blue-600 */
+    --blue-primary: #3b82f6; /* blue-500 */
+    --blue-dark: #2563eb; /* blue-600 */
 
     /* Gradients */
-    --gradient-brand: linear-gradient(to right, var(--green-primary), var(--blue-primary));
-    --gradient-brand-dark: linear-gradient(to right, var(--green-dark), var(--blue-dark));
-    --gradient-brand-light: linear-gradient(to right, #ecfdf5, #eff6ff, #ffffff);
+    --gradient-brand: linear-gradient(
+        to right,
+        var(--green-primary),
+        var(--blue-primary)
+    );
+    --gradient-brand-dark: linear-gradient(
+        to right,
+        var(--green-dark),
+        var(--blue-dark)
+    );
+    --gradient-brand-light: linear-gradient(
+        to right,
+        #ecfdf5,
+        #eff6ff,
+        #ffffff
+    );
     /* Text Colors */
-    --text-dark: #1f2937;       /* gray-800 */
-    --text-muted: #6b7280;      /* gray-500 */
+    --text-dark: #1f2937; /* gray-800 */
+    --text-muted: #6b7280; /* gray-500 */
 
     /* Background */
     --bg-white: #ffffff;
 }
-
-
 
 /* =========================
    GLOBAL BRAND CLASSES
@@ -67,13 +78,14 @@
     background-color: var(--green-dark);
 }
 
-
-
 /* =========================
    FOOTER COLORS
 ========================= */
 .footer-bg {
-    background: var(--gradient-brand-light, linear-gradient(to right, #ecfdf5, #eff6ff, #ffffff));
+    background: var(
+        --gradient-brand-light,
+        linear-gradient(to right, #ecfdf5, #eff6ff, #ffffff)
+    );
 }
 
 .footer-link {
@@ -106,4 +118,23 @@
 
 .footer-social:hover {
     color: var(--green-primary);
+}
+
+/* =========================
+   Gsap Button
+========================= */
+.tilt-btn {
+    transform-style: preserve-3d;
+    transition: box-shadow 0.3s ease;
+    will-change: transform;
+}
+
+/* Character animation */
+.split-title .char {
+    display: inline-block;
+    will-change: transform, opacity;
+}
+
+.split-desc .line {
+    perspective: 600px;
 }

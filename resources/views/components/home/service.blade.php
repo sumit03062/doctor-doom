@@ -60,7 +60,7 @@ $why_choose_us = [
                 Your Health Deserves the <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">Best Care</span>
             </h2>
             
-            <p class="max-w-3xl mx-auto mt-6 text-xl text-center text-gray-700">
+            <p class="max-w-3xl mx-auto mt-6 text-xl text-center text-gray-700 split-desc">
                 Advanced multi-specialty hospital delivering world-class treatment with compassion and trust.
             </p>
         </div>
@@ -101,8 +101,8 @@ $why_choose_us = [
                     </div>
 
                     <!-- Hover CTA -->
-                    <div class="py-4 text-center text-white transition-opacity duration-300 opacity-0 bg-gradient-to-r from-teal-600 to-blue-600 group-hover:opacity-100">
-                        <a href="facilities.php" class="font-semibold">Explore More →</a>
+                    <div class="py-4 text-center text-white transition-opacity duration-300 rounded-md opacity-0 tilt-btn bg-gradient-to-r from-teal-600 to-blue-600 group-hover:opacity-100">
+                        <a href="services.php" class="font-semibold ">Explore More →</a>
                     </div>
                 </div>
             <?php endforeach; ?>

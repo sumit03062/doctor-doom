@@ -27,10 +27,10 @@
         </h2>
 
         <!-- Description -->
-        <p class="text-lg leading-relaxed text-gray-600">
+        <p class="text-lg leading-relaxed text-gray-600 split-desc">
           We are a 500+ bed NABH-accredited super-specialty hospital committed to delivering world-class healthcare with compassion, integrity, and cutting-edge medical technology.
         </p>
-        <p class="text-lg leading-relaxed text-gray-600">
+        <p class="text-lg leading-relaxed text-gray-600 split-desc">
           From life-saving emergency care to planned surgeries and preventive health checkups — our team of 200+ expert doctors and 1000+ dedicated staff ensure every patient receives personalized attention and the best possible outcomes.
         </p>
 

@@ -21,13 +21,13 @@
             </div>
 
             <!-- Desktop Menu -->
-            <div class="items-center hidden p-4 space-x-8 rounded-full md:flex bg-brand">
-                <a href="/" class="text-white transition hover:text-green-200">Home</a>
-                <a href="#about" class="text-white transition hover:text-green-200">About</a>
-                <a href="{{ route('doctors.page') }}" class="text-white transition hover:text-green-200">Doctors</a>
-                <a href="#services" class="text-white transition hover:text-green-200">Services</a>
-                <a href="#blogs" class="text-white transition hover:text-green-200">Blogs</a>
-                <a href="#contact" class="text-white transition hover:text-green-200">Contact</a>
+            <div class="relative items-center hidden p-4 space-x-8 rounded-full toolbar md:flex bg-brand ">
+                <a href="/" class="text-white transition hover:text-green-200 toolbarItem">Home</a>
+                <a href="{{ route('about.page') }}" class="text-white transition hover:text-green-200 toolbarItem">About</a>
+                <a href="{{ route('doctors.page') }}" class="text-white transition hover:text-green-200 toolbarItem">Doctors</a>
+                <a href="#services" class="text-white transition hover:text-green-200 toolbarItem">Services</a>
+                <a href="#blogs" class="text-white transition hover:text-green-200 toolbarItem">Blogs</a>
+                <a href="#contact" class="text-white transition hover:text-green-200 toolbarItem">Contact</a>
             </div>
 
             <!-- Right Section -->

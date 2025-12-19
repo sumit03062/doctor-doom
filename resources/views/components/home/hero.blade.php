@@ -1,65 +1,65 @@
 <?php
 $slides = [
-    [
-        "img"       => "https://images.pexels.com/photos/8376277/pexels-photo-8376277.jpeg",
-        "title"     => "Compassionate Care",
-        "highlight" => "Advanced Healthcare",
-        "desc"      => "Experience world-class medical support with modern technology, personalized treatment, and a patient-first approach designed to restore your health and confidence.",
-        "icon1"     => "stethoscope",
-        "stat1"     => "10+ Years",
-        "text1"     => "Medical Excellence",
-        "icon2"     => "heart-pulse",
-        "stat2"     => "12,000+",
-        "text2"     => "Health Recoveries",
-        "icon3"     => "clock",
-        "stat3"     => "24/7",
-        "text3"     => "Support"
-    ],
-    [
-        "img"       => "https://images.pexels.com/photos/6129507/pexels-photo-6129507.jpeg",
-        "title"     => "Specialized Treatment",
-        "highlight" => "Expert Doctors",
-        "desc"      => "Our team of certified specialists ensures accurate diagnosis, effective treatments, and reliable medical guidance for every stage of your health journey.",
-        "icon1"     => "activity",
-        "stat1"     => "15+ Years",
-        "text1"     => "Advanced Diagnosis",
-        "icon2"     => "user-check",
-        "stat2"     => "20,000+",
-        "text2"     => "Patients Trusted",
-        "icon3"     => "calendar-check",
-        "stat3"     => "24/7",
-        "text3"     => "Doctor Access"
-    ],
-    [
-        "img"       => "https://images.pexels.com/photos/8442105/pexels-photo-8442105.jpeg",
-        "title"     => "Modern Facilities",
-        "highlight" => "Cutting-Edge Technology",
-        "desc"      => "We use the latest medical equipment and advanced diagnostic tools that bring precision, safety, and unmatched treatment quality to our patients.",
-        "icon1"     => "microscope",
-        "stat1"     => "8+ Years",
-        "text1"     => "Research-Backed",
-        "icon2"     => "scan",
-        "stat2"     => "9,500+",
-        "text2"     => "Precision Scans",
-        "icon3"     => "timer-reset",
-        "stat3"     => "Same Day",
-        "text3"     => "Reports"
-    ],
-    [
-        "img"       => "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800",
-        "title"     => "Your Trusted Partner",
-        "highlight" => "Complete Wellness",
-        "desc"      => "From preventive care to long-term health management, we provide personalized wellness plans ensuring a healthier life for you and your family.",
-        "icon1"     => "heart-handshake",
-        "stat1"     => "12+ Years",
-        "text1"     => "Wellness Care",
-        "icon2"     => "users-round",
-        "stat2"     => "15,000+",
-        "text2"     => "Families Served",
-        "icon3"     => "clock",
-        "stat3"     => "24/7",
-        "text3"     => "Availability"
-    ]
+  [
+    "img"       => "https://images.pexels.com/photos/8376277/pexels-photo-8376277.jpeg",
+    "title"     => "Compassionate Care",
+    "highlight" => "Advanced Healthcare",
+    "desc"      => "Experience world-class medical support with modern technology, personalized treatment, and a patient-first approach designed to restore your health and confidence.",
+    "icon1"     => "stethoscope",
+    "stat1"     => "10+ Years",
+    "text1"     => "Medical Excellence",
+    "icon2"     => "heart-pulse",
+    "stat2"     => "12,000+",
+    "text2"     => "Health Recoveries",
+    "icon3"     => "clock",
+    "stat3"     => "24/7",
+    "text3"     => "Support"
+  ],
+  [
+    "img"       => "https://images.pexels.com/photos/6129507/pexels-photo-6129507.jpeg",
+    "title"     => "Specialized Treatment",
+    "highlight" => "Expert Doctors",
+    "desc"      => "Our team of certified specialists ensures accurate diagnosis, effective treatments, and reliable medical guidance for every stage of your health journey.",
+    "icon1"     => "activity",
+    "stat1"     => "15+ Years",
+    "text1"     => "Advanced Diagnosis",
+    "icon2"     => "user-check",
+    "stat2"     => "20,000+",
+    "text2"     => "Patients Trusted",
+    "icon3"     => "calendar-check",
+    "stat3"     => "24/7",
+    "text3"     => "Doctor Access"
+  ],
+  [
+    "img"       => "https://images.pexels.com/photos/8442105/pexels-photo-8442105.jpeg",
+    "title"     => "Modern Facilities",
+    "highlight" => "Cutting-Edge Technology",
+    "desc"      => "We use the latest medical equipment and advanced diagnostic tools that bring precision, safety, and unmatched treatment quality to our patients.",
+    "icon1"     => "microscope",
+    "stat1"     => "8+ Years",
+    "text1"     => "Research-Backed",
+    "icon2"     => "scan",
+    "stat2"     => "9,500+",
+    "text2"     => "Precision Scans",
+    "icon3"     => "timer-reset",
+    "stat3"     => "Same Day",
+    "text3"     => "Reports"
+  ],
+  [
+    "img"       => "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "title"     => "Your Trusted Partner",
+    "highlight" => "Complete Wellness",
+    "desc"      => "From preventive care to long-term health management, we provide personalized wellness plans ensuring a healthier life for you and your family.",
+    "icon1"     => "heart-handshake",
+    "stat1"     => "12+ Years",
+    "text1"     => "Wellness Care",
+    "icon2"     => "users-round",
+    "stat2"     => "15,000+",
+    "text2"     => "Families Served",
+    "icon3"     => "clock",
+    "stat3"     => "24/7",
+    "text3"     => "Availability"
+  ]
 ];
 ?>
 <section id="home" class="relative w-full min-h-screen overflow-hidden py-9 bg-gradient-to-br from-teal-50 via-blue-50 to-indigo-100 md:py-20 lg:py-28 ">
@@ -85,15 +85,23 @@ $slides = [
             </h1>
 
             <!-- Description -->
-            <p class="mt-4 text-base leading-relaxed text-gray-600 sm:text-lg md:text-lg">
+            <p class="mt-4 text-base leading-relaxed text-gray-600 split-desc sm:text-lg md:text-lg">
               <?= htmlspecialchars($s['desc']) ?>
             </p>
 
             <!-- Buttons -->
             <div class="flex flex-col gap-4 mt-5 sm:flex-row md:8">
-              <a href="#appointment" class="px-8 py-4 font-semibold text-center text-white transition-transform rounded-full shadow-lg bg-gradient-to-r from-green-500 to-blue-500 hover:shadow-2xl hover:scale-105">Book Appointment</a>
-              <a href="about.php" class="px-8 py-4 font-semibold text-center text-white transition-transform rounded-full shadow-lg bg-gradient-to-r from-green-500 to-blue-500 hover:shadow-xl hover:scale-105">Know More</a>
+              <a href="#appointment"
+                class="px-8 py-4 font-semibold text-center text-white rounded-full shadow-lg tilt-btn bg-gradient-to-r from-green-500 to-blue-500">
+                Book Appointment
+              </a>
+
+              <a href="about.php"
+                class="px-8 py-4 font-semibold text-center text-white rounded-full shadow-lg tilt-btn bg-gradient-to-r from-green-500 to-blue-500">
+                Know More
+              </a>
             </div>
+
 
             <!-- Stats -->
             <div class="grid grid-cols-3 gap-3 mt-5 md:mt-10 md:gap-6 sm:grid-cols-3">

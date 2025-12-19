@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DoctorDashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,10 @@ Route::get('/contact', function () {
 })->name('contact.form');
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// about page
+
+Route::get('/about', [PageController::class, 'about'])->name('about.page');
 
 // Authentication (Breeze)
 require __DIR__ . '/auth.php';
@@ -119,3 +125,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/doctor/profile-edit', [ProfileController::class, 'updateDoctor'])
     ->name('doctor.profile-edit');
+
+

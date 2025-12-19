@@ -4,9 +4,9 @@
         <!-- Section Header -->
         <div class="mb-12 text-center">
             <h2 class="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
-                Get in Touch With Us
+                Get in Touch <span class="text-transparent bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text">With Us</span>
             </h2>
-            <p class="max-w-2xl mx-auto text-lg text-gray-600">
+            <p class="max-w-2xl mx-auto text-lg text-gray-600 split-desc">
                 Have questions? Need assistance? We're here to help you 24/7.
             </p>
         </div>
@@ -79,7 +79,7 @@
 
 
                         <button type="submit"
-                            class="relative p-4 text-lg font-bold text-white transition transform rounded-md shadow-lg bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-700 hover:to-emerald-700 hover:shadow-xl hover:-translate-y-1 left-[46%]">
+                            class="tilt-btnn relative p-4 text-lg font-bold text-white transition transform rounded-md shadow-lg bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-700 hover:to-emerald-700 hover:shadow-xl hover:-translate-y-1 left-[46%]">
                             Submit
                         </button>
 
