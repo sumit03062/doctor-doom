@@ -5,7 +5,7 @@
         <!-- Header -->
         <div class="mb-12 text-center">
             <h2 class="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
-                Book Your <span class="text-transparent bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text">Appointment</span>
+                Book Your <span class="text-transparent text-brand bg-clip-text">Appointment</span>
             </h2>
             <p class="max-w-2xl mx-auto text-lg text-gray-600 split-desc lg:text-xl">
                 Get expert care from our specialist doctors. Same-day appointments available.
@@ -20,14 +20,14 @@
             <div class="order-2 lg:order-1">
                 <div class="relative overflow-hidden bg-white border shadow-2xl rounded-3xl backdrop-blur-xl bg-opacity-95 border-white/20">
                     <!-- Decorative Top Bar -->
-                    <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-t-3xl"></div>
+                    <div class="absolute top-0 left-0 right-0 h-2 bg-brand-dark rounded-t-3xl"></div>
 
                     <div class="p-8 lg:p-10">
                         <h3 class="mb-8 text-3xl font-bold text-gray-800">
                             Schedule Your Visit
                         </h3>
                         @auth
-                        <form action="{{ route('appointment.store') }}" method="POST" class="space-y-6">
+                        <form id="appointmentForm" method="POST" class="space-y-6">
                             @csrf
 
                             <!-- Full Name -->
@@ -165,7 +165,7 @@
                             <!-- Submit Button -->
                             <div class="pt-4">
                                 <button type="submit" id="appointmentSubmitBtn"
-                                    class="flex items-center justify-center w-full gap-3 py-5 text-xl font-bold text-white transition-all transform shadow-xl tilt-btn bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl hover:from-blue-700 hover:to-emerald-700 active:scale-95 hover:shadow-2xl hover:-translate-y-1 group">
+                                    class="flex items-center justify-center w-full gap-3 py-5 text-xl font-bold text-white transition-all transform shadow-xl btn-primary tilt-btn bg-brand-dark rounded-2xl hover:from-blue-700 hover:to-emerald-700 active:scale-95 hover:shadow-2xl hover:-translate-y-1 group">
                                     <span>Book Appointment Now</span>
                                     <svg class="w-6 h-6 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -237,3 +237,49 @@
         </div>
     </div>
 </section>
+<script>
+    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+
+        fetch("{{ route('appointment.store') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                var options = {
+                    key: "{{ config('services.razorpay.key') }}",
+                    amount: data.amount * 100,
+                    currency: "INR",
+                    name: "HealthCarePro",
+                    description: "Doctor Appointment",
+                    order_id: data.razorpay_order_id,
+                    handler: function(response) {
+                        fetch("{{ route('payment.verify') }}", {
+                                method: "POST",
+                                headers: {
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                    appointment_id: data.appointment_id
+                                })
+                            })
+                            .then(res => res.json())
+                            .then(() => alert("Payment successful! Appointment confirmed."))
+                            .catch(() => alert("Payment verification failed."));
+                    }
+                };
+                new Razorpay(options).open();
+            })
+            .catch(() => alert("Something went wrong. Please try again."));
+    });
+</script>

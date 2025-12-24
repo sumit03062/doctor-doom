@@ -9,18 +9,15 @@ use App\Mail\AppointmentConfirmedMail;
 
 class PaymentController extends Controller
 {
-    /**
-     * Verify Razorpay Payment
-     */
     public function verify(Request $request)
     {
         $request->validate([
-            'razorpay_order_id'   => 'required',
-            'razorpay_payment_id'=> 'required',
+            'razorpay_order_id' => 'required',
+            'razorpay_payment_id' => 'required',
             'razorpay_signature' => 'required',
+            'appointment_id' => 'required|exists:appointments,id',
         ]);
 
-        // Verify signature
         $generatedSignature = hash_hmac(
             'sha256',
             $request->razorpay_order_id . "|" . $request->razorpay_payment_id,
@@ -31,31 +28,17 @@ class PaymentController extends Controller
             abort(403, 'Payment verification failed.');
         }
 
-        // Find appointment
-        $appointment = Appointment::where(
-            'razorpay_order_id',
-            $request->razorpay_order_id
-        )->firstOrFail();
+        $appointment = Appointment::findOrFail($request->appointment_id);
 
-        // Update payment status
         $appointment->update([
             'razorpay_payment_id' => $request->razorpay_payment_id,
-            'payment_status'      => 'paid',
-            'status'              => 'upcoming',
+            'payment_status' => 'paid',
+            'status' => 'upcoming',
         ]);
 
-        // Send confirmation email
-        Mail::to($appointment->email)
-            ->send(new AppointmentConfirmedMail($appointment));
+        // Optional: send confirmation email
+        // Mail::to($appointment->email)->send(new AppointmentConfirmedMail($appointment));
 
-        return redirect()
-            ->route('appointment.confirmation', $appointment)
-            ->with('success', 'Payment successful! Appointment confirmed.');
+        return response()->json(['success' => true]);
     }
-
-    public function checkout(Appointment $appointment)
-{
-    return view('payments.checkout', compact('appointment'));
 }
-}
-

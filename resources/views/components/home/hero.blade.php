@@ -81,7 +81,7 @@ $slides = [
 
             <!-- Highlight -->
             <h1 class="mt-2 text-3xl font-extrabold leading-tight text-gray-900 sm:text-4xl md:text-5xl">
-              Exceptional Care, <span class="text-transparent bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text"><?= htmlspecialchars($s['highlight']) ?></span>
+              Exceptional Care, <span class="text-transparent text-brand bg-clip-text"><?= htmlspecialchars($s['highlight']) ?></span>
             </h1>
 
             <!-- Description -->
@@ -92,12 +92,12 @@ $slides = [
             <!-- Buttons -->
             <div class="flex flex-col gap-4 mt-5 sm:flex-row md:8">
               <a href="#appointment"
-                class="px-8 py-4 font-semibold text-center text-white rounded-full shadow-lg tilt-btn bg-gradient-to-r from-green-500 to-blue-500">
+                class="px-8 py-4 font-semibold text-center rounded-full shadow-lg tilt-btn bg-brand-dark">
                 Book Appointment
               </a>
 
               <a href="about.php"
-                class="px-8 py-4 font-semibold text-center text-white rounded-full shadow-lg tilt-btn bg-gradient-to-r from-green-500 to-blue-500">
+                class="px-8 py-4 font-semibold text-center rounded-full shadow-lg tilt-btn bg-brand-dark">
                 Know More
               </a>
             </div>

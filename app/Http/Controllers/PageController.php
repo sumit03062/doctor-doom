@@ -10,4 +10,9 @@ class PageController extends Controller
     {
         return view('pages.about'); // points to resources/views/pages/about.blade.php
     }
+
+     public function service()
+    {
+        return view('pages.service');
+    }
 }

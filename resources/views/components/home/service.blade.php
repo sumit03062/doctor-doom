@@ -57,7 +57,7 @@ $why_choose_us = [
             </h3>
             
             <h2 class="text-4xl font-bold leading-tight text-center text-gray-900 sm:text-5xl lg:text-6xl">
-                Your Health Deserves the <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">Best Care</span>
+                Your Health Deserves the <span class="text-transparent bg-clip-text text-brand">Best Care</span>
             </h2>
             
             <p class="max-w-3xl mx-auto mt-6 text-xl text-center text-gray-700 split-desc">
@@ -93,7 +93,7 @@ $why_choose_us = [
 
                         <!-- Stat Highlight -->
                         <div class="inline-flex items-baseline">
-                            <span class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">
+                            <span class="text-4xl font-bold text-transparent bg-clip-text bg-brand">
                                 <?= $item['stat'] ?>
                             </span>
                             <span class="ml-2 text-lg text-gray-600"><?= $item['stat_label'] ?></span>
@@ -101,7 +101,7 @@ $why_choose_us = [
                     </div>
 
                     <!-- Hover CTA -->
-                    <div class="py-4 text-center text-white transition-opacity duration-300 rounded-md opacity-0 tilt-btn bg-gradient-to-r from-teal-600 to-blue-600 group-hover:opacity-100">
+                    <div class="py-4 text-center text-white transition-opacity duration-300 rounded-md opacity-0 tilt-btn bg-brand-dark group-hover:opacity-100">
                         <a href="services.php" class="font-semibold ">Explore More →</a>
                     </div>
                 </div>

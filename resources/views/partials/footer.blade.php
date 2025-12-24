@@ -1,5 +1,3 @@
-
-
 <footer class="relative bg-white border-t border-gray-200 footer">
   <div class="px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-12 md:grid-cols-4">
@@ -18,9 +16,10 @@
       <div class="space-y-2">
         <h3 class="text-lg font-semibold text-gray-900">Quick Links</h3>
         <ul class="space-y-1 text-gray-600">
-          <li><a href="#home" class="hover:text-green-600">Home</a></li>
-          <li><a href="#services" class="hover:text-green-600">Services</a></li>
-          <li><a href="#doctors" class="hover:text-green-600">Doctors</a></li>
+          <li><a href="/" class="hover:text-green-600">Home</a></li>
+          <li><a href="{{ route('about.page') }}" class="hover:text-green-600">About</a></li>
+          <li><a href="{{ route('doctors.page') }}" class="hover:text-green-600">Doctors</a></li>
+          <li><a href="{{ route('service.page') }}" class="hover:text-green-600">Services</a></li>
           <li><a href="#contact" class="hover:text-green-600">Contact</a></li>
         </ul>
       </div>

@@ -45,6 +45,7 @@
 
 .bg-brand-dark {
     background: var(--gradient-brand-dark);
+    color: #fff;
 }
 
 /* Text */

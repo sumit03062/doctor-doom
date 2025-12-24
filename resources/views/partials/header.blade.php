@@ -25,7 +25,7 @@
                 <a href="/" class="text-white transition hover:text-green-200 toolbarItem">Home</a>
                 <a href="{{ route('about.page') }}" class="text-white transition hover:text-green-200 toolbarItem">About</a>
                 <a href="{{ route('doctors.page') }}" class="text-white transition hover:text-green-200 toolbarItem">Doctors</a>
-                <a href="#services" class="text-white transition hover:text-green-200 toolbarItem">Services</a>
+                <a href="{{ route('service.page') }}" class="text-white transition hover:text-green-200 toolbarItem">Services</a>
                 <a href="#blogs" class="text-white transition hover:text-green-200 toolbarItem">Blogs</a>
                 <a href="#contact" class="text-white transition hover:text-green-200 toolbarItem">Contact</a>
             </div>
@@ -65,12 +65,12 @@
                     @auth
                     @if(Auth::user()->role === 'doctor')
                     <a href="{{ route('doctor.dashboard') }}" class="flex items-center">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
+                        <img src="{{ $doctor->user->profile_photo_url ?? asset('default-doctor.png') }}"
                             class="w-10 h-10 rounded-full" alt="Profile">
                     </a>
                     @else
                     <a href="{{ route('dashboard') }}" class="flex items-center">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
+                        <img src="{{ Auth::user()->profile_photo_url }}"
                             class="w-10 h-10 rounded-full" alt="Profile">
                     </a>
                     @endif

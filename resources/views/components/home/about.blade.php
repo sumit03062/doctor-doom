@@ -23,7 +23,7 @@
 
         <!-- Main Heading -->
         <h2 class="text-4xl font-bold leading-tight text-gray-900 lg:text-5xl">
-          Healing with <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 ">Care & Excellence</span> Since 1999
+          Healing with <span class="text-transparent bg-clip-text text-brand ">Care & Excellence</span> Since 1999
         </h2>
 
         <!-- Description -->
@@ -79,7 +79,7 @@
 
         <!-- CTA Buttons -->
         <div class="relative flex flex-col gap-5 pt-6 sm:flex-row sm:left-[35%]">
-          <a href="about-us.php" class="px-8 py-4 font-bold text-white transition transform rounded-full shadow-lg bg-gradient-to-r from-green-500 to-blue-500 hover:shadow-xl hover:scale-105">
+          <a href="about-us.php" class="px-8 py-4 font-bold text-white transition transform rounded-full shadow-lg bg-brand-dark hover:shadow-xl hover:scale-105">
             Know More About Us
           </a>
          

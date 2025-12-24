@@ -7,8 +7,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class User extends Authenticatable implements MustVerifyEmail
+
+class User extends Authenticatable implements MustVerifyEmail,FilamentUser
 {
     use HasFactory, Notifiable;
 
@@ -133,6 +136,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === 'doctor';
     }
 
+
     public function isUser(): bool
     {
         return $this->role === 'user';
@@ -147,6 +151,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Doctor::class);
     }
 
-    
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->role === 'admin';
+    }
     
 }
+

@@ -4,7 +4,7 @@
         <!-- Section Header -->
         <div class="mb-12 text-center">
             <h2 class="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
-                Get in Touch <span class="text-transparent bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text">With Us</span>
+                Get in Touch <span class="text-transparent text-brand bg-clip-text">With Us</span>
             </h2>
             <p class="max-w-2xl mx-auto text-lg text-gray-600 split-desc">
                 Have questions? Need assistance? We're here to help you 24/7.
