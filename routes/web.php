@@ -11,7 +11,9 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DoctorDashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
-
+use App\Models\Appointment;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,10 +87,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/appointment/{appointment}', [AppointmentController::class, 'destroy'])
         ->name('appointment.destroy');
 
-    Route::get('/appointments/confirmation/{appointment}', function (Appointment $appointment) {
-        return view('appointments.confirmation', compact('appointment'));
+    Route::get('/appointment/confirmation/{appointment}', function ($appointment) {
+        return view('appointment.confirmation', compact('appointment'));
     })->name('appointment.confirmation');
+
+
+    Route::post('/payment/verify', [PaymentController::class, 'verify'])
+        ->name('payment.verify');
+
+    Route::get('/payment/{appointment}', [PaymentController::class, 'checkout'])->name('payment.checkout');
 });
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -125,5 +135,3 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/doctor/profile-edit', [ProfileController::class, 'updateDoctor'])
     ->name('doctor.profile-edit');
-
-

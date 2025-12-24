@@ -6,12 +6,10 @@ use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Services\GoogleCalendarService;
-use Carbon\Carbon;
+use Razorpay\Api\Api;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\AppointmentConfirmation;
+use App\Mail\AppointmentConfirmedMail;
 
 class AppointmentController extends Controller
 {
@@ -25,9 +23,9 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Store appointment
+     * Store appointment (Create appointment + Razorpay order)
      */
-    public function store(Request $request, GoogleCalendarService $calendar)
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'full_name'        => 'required|string|max:255',
@@ -41,8 +39,6 @@ class AppointmentController extends Controller
             'appointment_time' => 'required',
             'message'          => 'nullable|string',
         ]);
-
-
 
         try {
             // Prevent double booking
@@ -60,7 +56,7 @@ class AppointmentController extends Controller
                 }
             }
 
-            // Create appointment
+            // STEP 1: Create appointment (pending)
             $appointment = Appointment::create([
                 'user_id'          => Auth::id(),
                 'doctor_id'        => $request->doctor_id,
@@ -73,36 +69,39 @@ class AppointmentController extends Controller
                 'appointment_date' => $request->appointment_date,
                 'appointment_time' => $request->appointment_time,
                 'message'          => $request->message,
-                'status'           => 'upcoming',
+                'status'           => 'pending',
+                'payment_status'   => 'pending',
+                'amount'           => 50000, // ₹500 (paise)
             ]);
 
-            // Email confirmation
-            Mail::to($appointment->email)
-                ->send(new AppointmentConfirmation($appointment));
+            // STEP 2: Create Razorpay order
+            $razorpay = new Api(
+                config('services.razorpay.key'),
+                config('services.razorpay.secret')
+            );
 
-            // Google Calendar
-            $start = Carbon::parse($request->appointment_date . ' ' . $request->appointment_time);
-            $end   = $start->copy()->addMinutes(30);
-
-            $calendar->createEvent([
-                'full_name' => $request->full_name,
-                'message'   => $request->message,
-                'start'     => $start->toRfc3339String(),
-                'end'       => $end->toRfc3339String(),
+            $order = $razorpay->order->create([
+                'receipt'  => 'APT_' . $appointment->id,
+                'amount'   => $appointment->amount,
+                'currency' => 'INR',
             ]);
 
+            // Save Razorpay order id
+            $appointment->update([
+                'razorpay_order_id' => $order['id'],
+            ]);
+
+            // STEP 3: Go to payment page
+            return redirect()->route('payment.checkout', $appointment->id);
 
 
-            return redirect()->route('appointment.confirmation', $appointment);
         } catch (\Exception $e) {
-
-
             return back()->withErrors([
                 'error' => 'Something went wrong. Please try again.'
             ])->withInput();
         }
+        
     }
-
 
     /**
      * Cancel appointment
@@ -110,7 +109,10 @@ class AppointmentController extends Controller
     public function cancel(Appointment $appointment)
     {
         $user = Auth::user();
-        $cancelBy = $user->id === $appointment->user_id ? 'patient' : ($user->role === 'doctor' ? 'doctor' : 'admin');
+
+        $cancelBy = $user->id === $appointment->user_id
+            ? 'patient'
+            : ($user->role === 'doctor' ? 'doctor' : 'admin');
 
         $appointment->update([
             'status'      => 'canceled',
@@ -126,10 +128,8 @@ class AppointmentController extends Controller
     public function edit(Appointment $appointment)
     {
         $doctors = User::where('role', 'doctor')->get();
-
         return view('appointment.edit', compact('appointment', 'doctors'));
     }
-
 
     /**
      * Update appointment
@@ -150,35 +150,24 @@ class AppointmentController extends Controller
             'status'           => 'nullable|in:upcoming,completed,canceled',
         ]);
 
+        // Prevent double booking
+        if ($request->doctor_id) {
+            $alreadyBooked = Appointment::where('doctor_id', $request->doctor_id)
+                ->where('appointment_date', $request->appointment_date)
+                ->where('appointment_time', $request->appointment_time)
+                ->where('status', '!=', 'canceled')
+                ->where('id', '!=', $appointment->id)
+                ->exists();
 
-
-        try {
-            // Prevent double booking if doctor changed
-            if ($request->doctor_id) {
-                $alreadyBooked = Appointment::where('doctor_id', $request->doctor_id)
-                    ->where('appointment_date', $request->appointment_date)
-                    ->where('appointment_time', $request->appointment_time)
-                    ->where('status', '!=', 'canceled')
-                    ->where('id', '!=', $appointment->id)
-                    ->exists();
-
-                if ($alreadyBooked) {
-                    throw ValidationException::withMessages([
-                        'appointment_time' => 'This doctor is already booked for the selected date and time. Please choose another slot.'
-                    ]);
-                }
+            if ($alreadyBooked) {
+                throw ValidationException::withMessages([
+                    'appointment_time' => 'This doctor is already booked for this slot.'
+                ]);
             }
-
-            $appointment->update($validated);
-
-
-            return redirect()->route('appointment.edit', $appointment)
-                ->with('success', 'Appointment updated successfully.');
-        } catch (\Exception $e) {
-
-            return back()->withErrors([
-                'error' => 'Something went wrong. Please try again.'
-            ])->withInput();
         }
+
+        $appointment->update($validated);
+
+        return back()->with('success', 'Appointment updated successfully.');
     }
 }

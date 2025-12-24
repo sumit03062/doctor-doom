@@ -235,9 +235,11 @@
                             <button class="flex-1 py-3 font-medium text-white transition-all transform bg-gradient-to-r from-green-500 to-blue-500 rounded-xl hover:shadow-lg hover:scale-105">
                                 Join Virtual Visit
                             </button>
-                            <button class="px-6 py-3 font-medium transition border border-gray-300 rounded-xl hover:bg-gray-50">
+                            <a href="{{ route('appointment.edit', $appt) }}">
+                                <button class="px-6 py-3 font-medium transition border border-gray-300 rounded-xl hover:bg-gray-50">
                                 Reschedule
                             </button>
+                            </a>
                         </div>
                     </div>
                     @endforeach

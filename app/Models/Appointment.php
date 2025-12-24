@@ -22,11 +22,14 @@ class Appointment extends Model
         'google_event_id',
         'status',
         'canceled_by',
+        'payment_status',
+        'amount',
+        'razorpay_order_id',
     ];
 
     protected $casts = [
         'appointment_date' => 'date', // ✅ cast as Carbon date
-        'appointment_time' => 'string',// optional if you want Carbon time
+        'appointment_time' => 'string', // optional if you want Carbon time
     ];
 
     public function patient()

@@ -6,42 +6,80 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
 
-            // Patient
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            /* ======================
+               USER & DOCTOR
+            ====================== */
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained()
+                  ->cascadeOnDelete();
 
-            // Doctor
-            $table->foreignId('doctor_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('doctor_id')
+                  ->nullable()
+                  ->constrained('users')
+                  ->nullOnDelete();
 
+            /* ======================
+               PATIENT DETAILS
+            ====================== */
             $table->string('full_name');
             $table->string('email');
             $table->string('phone');
 
-            $table->integer('age')->nullable();
+            $table->unsignedTinyInteger('age')->nullable();
             $table->string('gender')->nullable();
 
             $table->string('department');
 
+            /* ======================
+               APPOINTMENT SLOT
+            ====================== */
             $table->date('appointment_date');
             $table->time('appointment_time');
 
             $table->text('message')->nullable();
 
-            $table->enum('status', ['upcoming', 'completed', 'canceled'])->default('upcoming');
+            /* ======================
+               PAYMENT (RAZORPAY)
+            ====================== */
+            $table->integer('amount')->nullable()->comment('Amount in paise');
+            $table->string('razorpay_order_id')->nullable();
+            $table->string('razorpay_payment_id')->nullable();
+
+            $table->enum('payment_status', [
+                'pending',
+                'paid',
+                'failed',
+                'refunded'
+            ])->default('pending');
+
+            /* ======================
+               APPOINTMENT STATUS
+            ====================== */
+            $table->enum('status', [
+                'pending',
+                'upcoming',
+                'completed',
+                'canceled'
+            ])->default('pending');
+
             $table->string('canceled_by')->nullable();
 
+            /* ======================
+               OPTIONAL INTEGRATIONS
+            ====================== */
             $table->string('google_event_id')->nullable();
 
             $table->timestamps();
 
-            // Prevent double booking per doctor
+            /* ======================
+               DOUBLE BOOKING PROTECTION
+            ====================== */
             $table->unique(
                 ['doctor_id', 'appointment_date', 'appointment_time'],
                 'unique_doctor_date_time'
@@ -49,9 +87,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('appointments');

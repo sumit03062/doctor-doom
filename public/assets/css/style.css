@@ -138,3 +138,37 @@
 .split-desc .line {
     perspective: 600px;
 }
+
+
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.animate-float {
+    animation: float 8s ease-in-out infinite;
+}
+
+.delay-2000 {
+    animation-delay: 2s;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.8s ease-out both;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}

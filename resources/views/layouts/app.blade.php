@@ -62,7 +62,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-sdk@latest/dist/clerk.browser.js"></script>
 
 
-
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
 
